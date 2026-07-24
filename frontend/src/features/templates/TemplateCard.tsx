@@ -11,14 +11,26 @@ interface Props {
 
 export function TemplateCard({ template, selected, onView, onUse }: Props) {
   return (
-    <Card withBorder radius="md" padding="md" h="100%">
+    <Card
+      withBorder
+      radius="md"
+      padding="md"
+      h="100%"
+      style={{
+        borderColor: selected ? 'var(--mantine-color-teal-filled)' : undefined,
+        borderWidth: selected ? 2 : 1,
+        backgroundColor: selected ? 'var(--mantine-color-teal-light)' : undefined,
+        boxShadow: selected ? 'var(--mantine-shadow-sm)' : undefined,
+        transition: 'border-color 150ms ease, background-color 150ms ease, box-shadow 150ms ease',
+      }}
+    >
       <Stack gap="xs" h="100%" justify="space-between">
         <Stack gap={4}>
           <Group justify="space-between" wrap="nowrap" align="flex-start">
             <Text fw={600}>{template.name}</Text>
             {selected && (
               <Badge size="sm" variant="light" color="teal">
-                In use
+                In Use
               </Badge>
             )}
           </Group>

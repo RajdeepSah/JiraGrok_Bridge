@@ -39,10 +39,11 @@ export function RunnerPage() {
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [runError, setRunError] = useState<string | null>(null);
   const [postedUrl, setPostedUrl] = useState<string | null | undefined>(undefined);
+  const [downloadFilename, setDownloadFilename] = useState<string | null>(null);
 
   const credentials: Credentials = { email: creds.email.trim(), token: creds.token };
 
-  const postToJira = (issueKey: string, text: string, auto = false) => {
+  const postToJira = (issueKey: string, text: string) => {
     setPostedUrl(undefined);
     comment.mutate(
       { body: { issue_key: issueKey, comment: text }, creds: credentials },
@@ -50,7 +51,7 @@ export function RunnerPage() {
         onSuccess: (result) => {
           setPostedUrl(result.comment_url ?? null);
           notifications.show({
-            title: auto ? 'Generated and posted to Jira' : 'Posted to Jira',
+            title: 'Posted to Jira',
             message: `Comment added to ${issueKey}.`,
             color: 'teal',
           });
@@ -82,7 +83,9 @@ export function RunnerPage() {
     setFieldErrors(errors);
     if (Object.keys(errors).length > 0) return;
 
-    const shouldPost = store.postBack;
+    const instructionName = store.selectedTemplateName ?? 'Custom Instruction';
+    const instructionModified =
+      store.selectedTemplateName !== null && store.instructions !== store.instructionsBaseline;
     run.mutate(
       {
         body: { issue_key: issueKey, instructions: store.instructions, template_id: store.selectedTemplateId },
@@ -91,6 +94,9 @@ export function RunnerPage() {
       {
         onSuccess: (result) => {
           store.setOutput(result.output);
+          setDownloadFilename(
+            `${result.issue_key}_output-${instructionName}${instructionModified ? '_modified' : ''}.txt`,
+          );
           void creds.persist();
           if (result.truncated) {
             notifications.show({
@@ -99,8 +105,6 @@ export function RunnerPage() {
               color: 'yellow',
             });
           }
-          // The checkbox behaves exactly like --comment: post the generated text as-is.
-          if (shouldPost) postToJira(issueKey, result.output, true);
         },
         onError: (error) => setRunError(messageFor(error)),
       },
@@ -129,6 +133,7 @@ export function RunnerPage() {
           onPost={(text) => postToJira(run.data!.issue_key, text)}
           posting={comment.isPending}
           postedUrl={postedUrl}
+          downloadFilename={downloadFilename ?? `${run.data.issue_key}_output-Custom Instruction.txt`}
         />
       )}
     </Stack>

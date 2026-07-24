@@ -1,7 +1,5 @@
-import { Alert, Button, Checkbox, Group, Loader, Stack, Text } from '@mantine/core';
+import { Alert, Button, Group, Loader, Stack, Text } from '@mantine/core';
 import { IconAlertTriangle, IconPlayerPlay } from '@tabler/icons-react';
-
-import { useRunnerStore } from './store';
 
 interface Props {
   onRun: () => void;
@@ -11,17 +9,8 @@ interface Props {
 }
 
 export function RunBar({ onRun, running, progressLabel, errorMessage }: Props) {
-  const postBack = useRunnerStore((s) => s.postBack);
-  const setPostBack = useRunnerStore((s) => s.setPostBack);
-
   return (
     <Stack gap="sm">
-      <Checkbox
-        label="Post the generated response straight back to Jira as a comment (like the --comment flag)"
-        checked={postBack}
-        onChange={(e) => setPostBack(e.currentTarget.checked)}
-      />
-
       <Group>
         <Button
           size="md"

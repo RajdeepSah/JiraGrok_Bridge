@@ -1,5 +1,6 @@
 # Secrets - never commit
 .env
+.claude
 
 # Python
 __pycache__/
@@ -22,3 +23,6 @@ npm-debug.log*
 .idea/
 .DS_Store
 Thumbs.db
+
+# Local run logs
+.runlogs/
