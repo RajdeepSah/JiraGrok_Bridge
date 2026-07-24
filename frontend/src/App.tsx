@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import {
   ActionIcon,
   Alert,
+  Anchor,
   Box,
   Container,
   Group,
@@ -50,10 +51,18 @@ export default function App() {
       >
         <Group justify="space-between" wrap="nowrap">
           <div>
-            <Title order={2}>Jira Grok Bridge</Title>
+            <Title order={2}>Jira Bridge</Title>
             <Text size="sm" c="dimmed">
               Turn a Jira ticket into AI-generated content, then post it back.
               {meta.data?.model ? ` Model: ${meta.data.model}.` : ''}
+              {' '}
+              <Anchor
+                href="https://console.groq.com/docs/legal/services-agreement"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Learn more
+              </Anchor>
             </Text>
           </div>
           <ColorSchemeToggle />

@@ -22,9 +22,10 @@ interface Props {
   onPost: (text: string) => void;
   posting: boolean;
   postedUrl: string | null | undefined;
+  downloadFilename: string;
 }
 
-export function OutputPanel({ result, onPost, posting, postedUrl }: Props) {
+export function OutputPanel({ result, onPost, posting, postedUrl, downloadFilename }: Props) {
   const output = useRunnerStore((s) => s.output);
   const editOutput = useRunnerStore((s) => s.editOutput);
 
@@ -33,7 +34,7 @@ export function OutputPanel({ result, onPost, posting, postedUrl }: Props) {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
     anchor.href = url;
-    anchor.download = `${result.issue_key}_output.txt`;
+    anchor.download = downloadFilename;
     anchor.click();
     URL.revokeObjectURL(url);
   };
