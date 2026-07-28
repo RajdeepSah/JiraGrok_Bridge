@@ -80,7 +80,7 @@ def build_parser() -> argparse.ArgumentParser:
         description="Send a Jira ticket to Groq with chosen instructions.",
         allow_abbrev=False,  # a typo like --coment must error, not match --comment
     )
-    parser.add_argument("issue_key", nargs="?", help="Jira issue key, e.g. FMDEV-5448")
+    parser.add_argument("issue_key", nargs="?", help="Jira issue key, e.g. FMDEV-8888")
 
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--print", dest="mode", action="store_const", const="print",
