@@ -8,7 +8,7 @@ captured in a validation-error message.
 
 from pydantic import BaseModel, Field
 
-# Jira issue keys look like FMDEV-5448: letters, then letters/digits, dash, digits.
+# Jira issue keys look like FMDEV-8888: letters, then letters/digits, dash, digits.
 # Enforced server-side so a crafted key cannot be interpolated into the Jira path.
 ISSUE_KEY_PATTERN = r"^[A-Za-z][A-Za-z0-9]+-\d+$"
 _IssueKey = Field(pattern=ISSUE_KEY_PATTERN, max_length=64)

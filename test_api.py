@@ -92,7 +92,7 @@ def test_run_happy_path(mock_get, mock_ask, mock_build, client):
     resp = client.post(
         "/api/run",
         headers=CREDS,
-        json={"issue_key": "FMDEV-5448", "instructions": "Summarize this ticket."},
+        json={"issue_key": "FMDEV-8888", "instructions": "Summarize this ticket."},
     )
     assert resp.status_code == 200
     data = resp.json()
@@ -146,11 +146,11 @@ def test_run_maps_issue_not_found(mock_get, client):
 @patch("backend.routers.comment.post_comment")
 def test_comment_happy_path(mock_post, client):
     mock_post.return_value = {"id": "10100"}
-    resp = client.post("/api/comment", headers=CREDS, json={"issue_key": "FMDEV-5448", "comment": "Posted text"})
+    resp = client.post("/api/comment", headers=CREDS, json={"issue_key": "FMDEV-8888", "comment": "Posted text"})
     assert resp.status_code == 200
     data = resp.json()
     assert data["posted"] is True
-    assert "FMDEV-5448" in data["comment_url"]
+    assert "FMDEV-8888" in data["comment_url"]
     assert "focusedCommentId=10100" in data["comment_url"]
     # Posted with the caller's credentials and comment text.
     assert mock_post.call_args.args[1] == ("user@example.com", "user-token")
@@ -177,7 +177,7 @@ def test_spa_fallback_preserves_asset_and_api_404s(tmp_path, monkeypatch):
 
     spa_client = TestClient(create_app())
 
-    deep_link = spa_client.get("/runner/FMDEV-5448")
+    deep_link = spa_client.get("/runner/FMDEV-8888")
     assert deep_link.status_code == 200
     assert "Jira Grok Bridge SPA" in deep_link.text
     assert deep_link.headers["content-type"].startswith("text/html")

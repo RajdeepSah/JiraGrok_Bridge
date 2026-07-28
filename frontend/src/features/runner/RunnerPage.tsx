@@ -71,7 +71,7 @@ export function RunnerPage() {
     store.setIssueKey(issueKey);
 
     const errors: FieldErrors = {};
-    if (!isValidIssueKey(issueKey)) errors.issueKey = 'Enter a valid Jira issue key, e.g. FMDEV-5448.';
+    if (!isValidIssueKey(issueKey)) errors.issueKey = 'Enter a valid Jira issue key, e.g. FMDEV-8888.';
     if (!store.instructions.trim())
       errors.instructions = "Instructions can't be empty - pick a template or write your own.";
     if (!isValidEmail(creds.email)) errors.email = 'Enter the email for your Atlassian account.';

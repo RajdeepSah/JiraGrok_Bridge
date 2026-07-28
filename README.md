@@ -11,6 +11,15 @@ The project keeps the Jira/Groq integration in a shared `core/` package:
 
 Despite the project name, the AI provider is the [Groq API](https://groq.com/), not the Grok model.
 
+## Documentation
+
+This README is the quick start. Deeper documentation for maintainers, users, and administrators lives in [docs/](docs/README.md):
+
+- [Overview](docs/overview.md) and [Architecture](docs/architecture.md) — what it does and how the pieces fit.
+- [Setup and deployment](docs/setup-and-deployment.md) — local, single-origin, and Vercel.
+- [Configuration](docs/configuration.md), [API reference](docs/api-reference.md), and [CLI reference](docs/cli.md).
+- [Security](docs/security.md), [Troubleshooting](docs/troubleshooting.md), [Maintenance](docs/maintenance.md), and [Limitations and roadmap](docs/limitations-and-roadmap.md).
+
 ## Features
 
 - Fetch a Jira issue using the current user's Jira email and API token.
@@ -87,7 +96,7 @@ Open <http://localhost:5173>. Vite proxies `/api` to FastAPI on `127.0.0.1:8000`
 
 ## Use the web app
 
-1. Enter an issue key such as `FMDEV-5448`, or paste a Jira `/browse/ISSUE-123` URL; the UI extracts and normalizes the key.
+1. Enter an issue key such as `FMDEV-8888`, or paste a Jira `/browse/ISSUE-123` URL; the UI extracts and normalizes the key.
 2. View and select a template, or enter a custom instruction in the editor.
 3. Enter your Jira email and API token.
 4. Select **Run**. The generated result and source-ticket preview appear below the form.
@@ -137,23 +146,23 @@ python jira_grok_bridge.py --list-templates
 Run with the default `ticket-improvement` template and print the output:
 
 ```powershell
-python jira_grok_bridge.py FMDEV-5448
-python jira_grok_bridge.py FMDEV-5448 --print
+python jira_grok_bridge.py FMDEV-8888
+python jira_grok_bridge.py FMDEV-8888 --print
 ```
 
 Choose another template or provide custom instructions:
 
 ```powershell
-python jira_grok_bridge.py FMDEV-5448 --template-id root-cause-analysis
-python jira_grok_bridge.py FMDEV-5448 --instructions "Summarize this ticket in one paragraph."
-python jira_grok_bridge.py FMDEV-5448 --instructions @prompt.txt
+python jira_grok_bridge.py FMDEV-8888 --template-id root-cause-analysis
+python jira_grok_bridge.py FMDEV-8888 --instructions "Summarize this ticket in one paragraph."
+python jira_grok_bridge.py FMDEV-8888 --instructions @prompt.txt
 ```
 
 Save or post the result:
 
 ```powershell
-python jira_grok_bridge.py FMDEV-5448 --save
-python jira_grok_bridge.py FMDEV-5448 --comment
+python jira_grok_bridge.py FMDEV-8888 --save
+python jira_grok_bridge.py FMDEV-8888 --comment
 ```
 
 `--print`, `--save`, and `--comment` are mutually exclusive. Instruction precedence is `--instructions`, then `--template-id`, then the default `ticket-improvement` template. The `@prompt.txt` form reads UTF-8 instructions from a file.
